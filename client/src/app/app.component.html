@@ -1,0 +1,9 @@
+<h1>{{title}}</h1>
+
+<ul>
+<!-- *ngFor is an Angular foreach which will iterate a list with 'let' 'of'-->
+    <li *ngFor="let user of users"> 
+<!-- Interpolation happens with double '{{ }}' wrapping the content-->
+        {{user.id}} - {{user.userName}}
+    </li>
+</ul>

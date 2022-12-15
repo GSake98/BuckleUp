@@ -13,23 +13,19 @@ builder.Services.AddDbContext<DataContext>(options =>
     // The connection string will be inside appsettings.Development.json
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+// Added to trust API Header so we can use Users database
+builder.Services.AddCors();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-// builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Won't be using Swagger in Developer mode preferably so
+// ~~~ ORDER AND EXACT LETTERING MATTERS ~~~ 25-26L
+// These are middleware we add so our http (last parameter) has access to anything prior
+app.UseCors(builder => 
+builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
-app.UseHttpsRedirection();
+app.UseHttpsRedirection(); 
 
 app.UseAuthorization();
 
@@ -38,3 +34,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Won't be using Swagger in Developer mode preferably so
+// Configure the HTTP request pipeline.
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
