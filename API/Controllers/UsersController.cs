@@ -1,17 +1,15 @@
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    // Controller will be accessed like localhost/...GET.../api/users
-    [Route("api/[controller]")]
-    // the [controller] part is replaced with our class name minus the Controller
-    // so it's https://localhost:5001/api/users
+    [Authorize] // Everything is accessible only if the user returns a JWT token to us
+    // Every [AllowAnonymous] will get bypassed if [Authorize] is at the root level
 
-    public class UsersController : ControllerBase
+    public class UsersController : BaseAPIController
     {
         // This is just a readonly property that reads from DataContext
         private readonly DataContext _context;
@@ -23,7 +21,7 @@ namespace API.Controllers
             // The argument we pass here is assigned so we have access to it
             _context = context;
         }
-        // 28-42 Commented code about async-sync and API end points as well as HttpGet
+        // 21-34 Commented code about async-sync and API end points as well as HttpGet
         /*/
         To get a resource from an API end point we have to use [HttpGet]
         To get a list of our users we must '<>' them inside an IEnumerable
@@ -39,6 +37,7 @@ namespace API.Controllers
         is done with the previous orders or already made ones, waiter gives to us
         /**/
 
+        [AllowAnonymous] // Anyone can access this method
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
