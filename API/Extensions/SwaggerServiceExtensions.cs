@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Builder;
-
 namespace API.Extensions
 {
+    // Need to install this nuget package to move on (latest version)
+    // dotnet add TodoApi.csproj package Swashbuckle.AspNetCore -v 6.2.3
     public static class SwaggerServiceExtensions
     {
         public static IServiceCollection AddSwaggerServices
