@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { User } from './models/user';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 // OnInit happens after our component has been constructed
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'BuckleUp';
-  users: any; // Any turns type safety off
 
   // This defines a constructor in typescript-javascript
   // 1=name 2=access 3=var name 4=what to get
-  constructor(private http: HttpClient) 
-  {
+  constructor(private accountService: AccountService) {
 
   }
 
@@ -34,14 +33,19 @@ export class AppComponent implements OnInit{
   angular is running which is 4200.
   /**/
   ngOnInit(): void {
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      // We want to get users inside our new variable and assign it
-      next: response => this.users = response, 
-      // We sent out our error in the console.log
-      error: error => console.log(error),
-      // http requests always complete and we always use () as lambda expression
-      // We'll get the string we passed if our request has been executed correctly
-      complete: () => console.log('Request has completed')
-    });
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      // Since we stored a string value it doesn't throw errors because it knows that IF we have
+      // a value it can parse it now or else it would complain that it could parse a null value.
+      const user: User = JSON.parse(userString);
+      this.accountService.setCurrentUser(user); // Makes sure we persist the login status
+    }
+    else {
+      return;
+    }
   }
 }

@@ -1,0 +1,31 @@
+<div class="container mt-5">
+    <div *ngIf="!registerMode" style="text-align: center;">
+        <!-- Add some style to the buttons and the text-->
+        <h1 style="color: rgb(18, 100, 195); font-family: Georgia;">
+            Register an account and... BuckleUp!</h1>
+        <p style="color: rgb(8, 57, 136); font-size: large;" class="lead">
+            BuckleUp is an engaging dating website that focuses on finding the perfect match for you.
+            Try it out for yourself by talking to people across the world!
+        </p>
+        <div class="text-center">
+            <button style=" background-color:rgb(221, 146, 26); border-color: rgb(157, 107, 14);"
+                (click)="registerToggle()" class="btn btn-primary btn-lg me-2">Register</button>
+            <button style="font-style: italic; background-color:rgb(28, 165, 122); border-color: rgb(19, 121, 75);"
+                class="btn btn-primary btn-lg">Learn more...</button>
+        </div>
+    </div>
+
+    <!-- *ngFor is an Angular foreach which will iterate a list with 'let' 'of'-->
+    <!-- Interpolation happens with double '{{ }}' wrapping the content-->
+    <!-- mt ms me mb is margin top-start-end-bottom which start is left end is right -->
+    <div *ngIf="registerMode" class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <!-- This is how we pass a component from a parent to a child and vice versa-->
+                <!-- Receiving stuff we use '[]', outputting stuff we use '()' and we emit with '$'-->
+                <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+                <!-- register is a child to home component -->
+            </div>
+        </div>
+    </div>
+</div>
