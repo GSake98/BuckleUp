@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { AccountService } from '../services/account.service';
 export class NavComponent implements OnInit {
   model: any = {}
 
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -19,14 +21,14 @@ export class NavComponent implements OnInit {
   // If incorrect password or username show error else show in console their token & login
   login() {
     this.accountService.login(this.model).subscribe({
-      next: response => { // {} for multiple statements
-        console.log(response);
-      },
-      error: error => console.log(error)
+      // {} only for multiple statements
+      next: () => this.router.navigateByUrl('/members'), // Nagivates to members page after logging in 
+      error: error => this.toastr.error(error.error) // This is how we show the error to the user
     })
   }
 
   logout() {
     this.accountService.logout(); // remove item from storage as well
+    this.router.navigateByUrl('/'); // Nagivates to home page after logging out 
   }
 }

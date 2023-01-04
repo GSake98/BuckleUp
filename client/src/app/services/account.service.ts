@@ -42,7 +42,7 @@ export class AccountService {
   register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       // If we want to return a response when we use map() we have to do it inside it
-      map(user => { // Now it knows our value is user
+      map(user => { // Now it knows our value is user after we specified it earlier
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
