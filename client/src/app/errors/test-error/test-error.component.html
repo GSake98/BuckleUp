@@ -1,0 +1,18 @@
+<!-- For some reason the StatusText in Chrome Inspect shows 'OK' on all errors, more on that(...)-->
+<ng-container>
+    <button class="btn btn-outline-primary me-3" (click)="get500Error()">Test 500 Error</button>
+    <button class="btn btn-outline-primary me-3" (click)="get400Error()">Test 400 Error</button>
+    <button class="btn btn-outline-primary me-3" (click)="get401Error()">Test 401 Error</button>
+    <button class="btn btn-outline-primary me-3" (click)="get404Error()">Test 404 Error</button>
+    <button class="btn btn-outline-primary me-3" (click)="get400ValidationError()">Test 400 Validation Error</button>
+    <!-- We make sure that if the array's length is greater than 0 we do the following-->
+    <div class="row mt-5" *ngIf="validationErrors.length > 0">
+        <!-- ul is unordered list-->
+        <ul class="text-danger">
+            <!-- loop all of our errors inside the array -->
+            <li *ngFor="let error of validationErrors">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+</ng-container>

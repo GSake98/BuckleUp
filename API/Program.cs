@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container. // We add the extensions we created
@@ -8,6 +9,9 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// Exception handling we created
+app.UseMiddleware<ExceptionMiddleware>();
 
 // ~~~ ORDER AND EXACT LETTERING MATTERS ~~~
 // These are middleware we add so our http (last parameter) has access to anything prior

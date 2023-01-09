@@ -14,7 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-bottom-right'
     })
   ],
-  exports: [ // If we want to import modules we also have to export. No need to specify forRoot.
+  exports: [ 
+    // If we want to import modules we also have to export. No need to specify forRoot.
+    // Only the components in 'declarations: []' will have access to our modules if we don't export.
     BsDropdownModule,
     ToastrModule
   ]

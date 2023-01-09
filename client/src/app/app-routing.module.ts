@@ -1,6 +1,9 @@
 // this app-routing.module.ts is where we define what routes are available in our angular app
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
@@ -22,9 +25,12 @@ const routes: Routes = [
       { path: 'messages', component: MessagesComponent },
     ]
   },
-  { path: '**', component: HomeComponent, pathMatch: 'full' } // Do this when redirecting empty path routes
+  { path: 'errors', component: TestErrorComponent},
+  { path: 'not-found', component: NotFoundComponent},
+  { path: 'server-error', component: ServerErrorComponent},
+  { path: '**', component: NotFoundComponent, pathMatch: 'full' } // Do this when redirecting empty path routes
   // 2 Asterisks are the wildcards, they redirect them in case they press anything else
-  // other than our specified components to where we desire, in this case 'Home'
+  // other than our specified components to wherever we desire
 ];
 
 @NgModule({

@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
       this.accountService.setCurrentUser(user); // Makes sure we persist the login status
     }
     else {
+      // this.accountService.setCurrentUser(null); // Not needed for fix, shown by comments in Udemy
       return;
     }
   }

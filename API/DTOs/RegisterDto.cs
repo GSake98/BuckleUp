@@ -11,6 +11,7 @@ namespace API.DTOs
         public string Username { get; set; }
         
         [Required]
+        [StringLength(8, MinimumLength = 4)] // Max 8 Min 4
         public string Password { get; set; }
         // These props will always go to lowercase because we pass them onto
         // JSON files which work with lowercase functionality
