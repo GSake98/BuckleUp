@@ -1,5 +1,8 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +14,15 @@ namespace API.Controllers
 
     public class UsersController : BaseAPIController
     {
-        // This is just a readonly property that reads from DataContext
-        private readonly DataContext _context;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        // Whenever we create an instance of DataContext we will have a session
-        // from DataContext available to our database
-        public UsersController(DataContext context)
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
-            // The argument we pass here is assigned so we have access to it
-            _context = context;
+            _mapper = mapper;
+            _userRepository = userRepository;
         }
+
         // 21-34 Commented code about async-sync and API end points as well as HttpGet
         /*/
         To get a resource from an API end point we have to use [HttpGet]
@@ -37,26 +39,25 @@ namespace API.Controllers
         is done with the previous orders or already made ones, waiter gives to us
         /**/
 
-        [AllowAnonymous] // Anyone can access this method
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            // If we don't wrap the return type into ActionResult we won't have
-            // access to certain requests which would be significantly helpful later on
-            // This will return a list of our users in the database and store them
-            var users = await _context.Users.ToListAsync();
-            return users;
+            var users = await _userRepository.GetMembersAsync();
+
+            // If we wrap it with Ok(); we get 200 response and it returns with no errors
+            return Ok(users);
         }
 
-    // To get a certain user we need a parameter inside [HttpGet]
-        [HttpGet("{id}")]
+        // To get a certain user we need a parameter inside [HttpGet]
+        // If we don't wrap the return type into ActionResult we won't have
+        // access to certain requests which would be significantly helpful later on
+        // This will return a list of our users in the database and store them
 
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            // We can find now one specific user by their id
-            // This only works if we use a primary key as a parameter
-            var user = await _context.Users.FindAsync(id);
-            return user;
+            // We can find now one specific user by their username
+            return await _userRepository.GetMemberAsync(username);
         }
     }
 }

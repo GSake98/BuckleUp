@@ -30,6 +30,9 @@ namespace API.Extensions
             // To get the behavior we want (to not dispose after the request) we use 'AddScoped'
             // 1 AddTransient (disposes instantly) 2 AddScoped (for every request) 3 AddSingleton (never disposes)
             services.AddScoped<ITokenService, TokenService>();
+            // Always add the other Interface service to our ApplicationServiceExtensions
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
