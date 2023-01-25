@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 /* Service Code Knowledge
 // This AccountService will be responsible for making HTTP requests from our client to our server
@@ -14,7 +15,7 @@ import { User } from '../models/user';
 })
 
 export class AccountService {
-  baseUrl = 'https://localhost:5001/api/'; // Strings always have warnings in case of typos
+  baseUrl = environment.apiUrl; 
   // Initializes value and we use ' | null' to defy the rule that doesn't let us pass null in ()
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable(); // $ means observable and store one as

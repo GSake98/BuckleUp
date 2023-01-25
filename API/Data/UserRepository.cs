@@ -52,7 +52,7 @@ namespace API.Data
         {
             // For many objects
             // Also if we want related data we have to tell it explicitly to include them
-            // We do it by using IGA - Loading the Entity "Include(p => p.Photos)"
+            // We do it by using Eager Loading the Entity "Include(p => p.Photos)"
             return await _context.Users
                 .Include(p => p.Photos)
                 .ToListAsync();

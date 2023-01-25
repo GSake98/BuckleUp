@@ -23,7 +23,7 @@ namespace API.Extensions
                         // API is the issuer but we haven't implemented it because we need the token
                         // in order to validate the issuer and we are creating the token here
                         ValidateIssuer = false,
-                        ValidateAudience = false // Information not passed in our token as well
+                        ValidateAudience = false, // Information not passed in our token as well
                     };
                 });
 

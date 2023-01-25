@@ -20,7 +20,7 @@ const routes: Routes = [
     // Which child routes we want to protect, it can also be an array []
     children: [
       { path: 'members', component: MemberListComponent}, 
-      { path: 'members/:id', component: MemberDetailComponent }, // Member details for the ids
+      { path: 'members/:username', component: MemberDetailComponent },
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },
     ]

@@ -1,0 +1,33 @@
+<div class="card mb-4" *ngIf="member">
+    <div class="card-img-wrapper">
+        <!-- This is how you display an image-->
+        <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top">
+        <!-- List for the buttons inside a member''s card -->
+        <div class="row member-icons animate">
+            <!-- USERNAME ICON-BUTTON -->
+            <button routerLink="/members/{{member.userName}}" class="btn btn-outline-success col-sm-4 p-2" 
+                style="color: rgb(224, 226, 233); background-color: rgb(20, 95, 181);">
+                <i class="fa fa-user"></i>
+            </button>
+            <!-- HEART ICON-BUTTON -->
+            <button class="btn btn-outline-success col-sm-4 p-2" 
+                style="color: rgb(224, 226, 233); background-color: rgb(181, 20, 20);">
+                <i class="fa fa-heart"></i>
+            </button>
+            <!-- MESSAGES ICON-BUTTON -->
+            <button class="btn btn-outline-success col-sm-4 p-2" 
+                style="color: rgb(224, 226, 233); background-color: rgb(146, 15, 186);">
+                <i class="fa fa-envelope"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-1">
+        <h6 class="card-title text-center mb-1">
+            <i class="fa fa-user me-2"></i> <!-- Icon tag -->
+            {{member.knownAs}}
+        </h6>
+        <p class="card-text text-muted text-center">
+            {{member.city}}
+        </p>
+    </div>
+</div>

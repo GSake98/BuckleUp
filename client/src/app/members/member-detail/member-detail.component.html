@@ -1,1 +1,56 @@
-<p>member-detail works!</p>
+<div class="row" *ngIf="member">
+    <div class="col-4">
+        <div class="card">
+            <!-- If the user has no photo we'll use the path in the OR statement'-->
+            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Location:</strong>
+                    <p>{{member.city}}, {{member.country}}</p>
+                </div>
+                <div>
+                    <strong>Age:</strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div>
+                    <strong>Last Active:</strong>
+                    <p>{{member.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Account Created:</strong>
+                    <p>{{member.created}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <!-- This insures that our buttons are in a row rather than in a column-->
+                <div class="btn-group d-flex">
+                    <button class="btn btn-outline-success" style="background-color: rgb(235, 40, 40);">Heart</button>
+                    <button class="btn btn-outline-success"
+                        style="background-color: rgb(20, 143, 181);">Messages</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading="About {{member.knownAs}}">
+                <h4>Description</h4>
+                <p>{{member.introduction}}</p>
+                <h4>Looking for</h4>
+                <p>{{member.lookingFor}}</p>
+            </tab>
+            <tab heading="Interests">
+                <h4>Interests</h4>
+                <p>{{member.interests}}</p>
+            </tab>
+            <tab heading="Photos">
+                <ngx-gallery [options]="galleryOptions" 
+                [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+            </tab>
+            <tab heading="Messages">
+                <p>Messages TBA</p>
+            </tab>
+        </tabset>
+    </div>
+</div>
