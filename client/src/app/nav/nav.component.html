@@ -27,7 +27,7 @@
       <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>{{user.username | titlecase}}'s
         Account</a>
       <div class="dropdown-menu mt-2" *dropdownMenu>
-        <a class="dropdown-item">Edit Profile</a>
+        <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>

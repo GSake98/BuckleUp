@@ -1,0 +1,81 @@
+<div class="row" *ngIf="member">
+    <div class="col-4">
+        <h1>Your Profile</h1>
+    </div>
+    <div class="col-8">
+        <!-- "dirty" is used so we show our current warning after changing things inside it -->
+        <div class="alert alert-info pt-1 pb-0" *ngIf="editForm.dirty" style="background-color: rgb(204, 72, 45);">
+            <p style="color:white"><strong>Warning:
+                </strong>Profile changes have been made. Any unsaved changes will be lost.</p>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <!-- If the user has no photo we'll use the path in the OR statement'-->
+            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Location:</strong>
+                    <p>{{member.city}}, {{member.country}}</p>
+                </div>
+                <div>
+                    <strong>Age:</strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div>
+                    <strong>Last Active:</strong>
+                    <p>{{member.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Account Created:</strong>
+                    <p>{{member.created}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <!-- form only works if it is associated with an id in this case in line 46 -->
+                <button type="submit" form="editForm" [disabled]="!editForm.dirty"
+                class="btn btn-outline-success col-12" 
+                style="color: white; background-color: rgb(32, 44, 210);">Save Profile</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading="About {{member.knownAs}}">
+                <!-- We make it into an Angular form by giving it a '#' + name -->
+                <!-- (ngSubmit) looks for a button inside the form with type of submit -->
+                <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+                    <h4 class="mt-2">Description</h4>
+                    <textarea class="form-control" 
+                        [(ngModel)]="member.introduction" 
+                        name="introduction"
+                        rows="6">
+                    </textarea>
+                    <h4 class="mt-2">Looking For</h4>
+                    <textarea class="form-control" 
+                        [(ngModel)]="member.lookingFor" 
+                        name="lookingFor"
+                        rows="6">
+                    </textarea>
+                    <h4 class="mt-2">Interests</h4>
+                    <textarea class="form-control" 
+                        [(ngModel)]="member.interests" 
+                        name="interests"
+                        rows="6">
+                    </textarea>
+                    <h4 class="mt-2">Location Details: </h4>
+                    <div class="d-flex flex-row align-items-center">
+                        <label for="city">City: </label>
+                        <input type="text" [(ngModel)]="member.city" name="city" class="form-control mx-2">
+                        <label for="country">Country: </label>
+                        <input type="text" [(ngModel)]="member.country" name="country" class="form-control mx-2">
+                    </div>
+                </form>
+            </tab>
+            <tab heading="Edit Photos">
+                <p>Photo edit will go here.</p>
+            </tab>
+        </tabset>
+    </div>
+</div>

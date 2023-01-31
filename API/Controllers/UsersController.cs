@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -58,6 +59,28 @@ namespace API.Controllers
         {
             // We can find now one specific user by their username
             return await _userRepository.GetMemberAsync(username);
+        }
+
+        // HttpPut is used for updating 
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            // We store the user from our token to this var (We use ? in case it is empty)
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(memberUpdateDto, user); // Update from memberUpdateDto to user
+
+            if( await _userRepository.SaveAllAsync())
+            {
+                return NoContent(); // 204 - Everything was okay
+            }
+
+            // If we get to this line nothing has been updated
+            return BadRequest("Failed to update user.");
         }
     }
 }
